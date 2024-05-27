@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interpolación de Lagrange</title>
+</head>
+<body>
+    <h1>Interpolación de Lagrange</h1>
+    <form method="post" id="lagrangeForm">
+        {% csrf_token %}
+        <label for="x">Valores de X:</label>
+        <input type="text" name="x[]" required><br>
+        <label for="y">Valores de Y:</label>
+        <input type="text" name="y[]" required><br>
+        <button type="submit">Interpolar</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('lagrangeForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+            fetch("{% url 'lagrange' %}", {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').innerText = 'Coeficientes: ' + data.coefficients;
+            });
+        });
+    </script>
+</body>
+</html>

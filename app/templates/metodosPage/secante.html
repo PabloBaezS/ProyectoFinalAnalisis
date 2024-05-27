@@ -1,0 +1,87 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+<div class="info">
+    <br>
+    <br>
+    <h1>Método de secante</h1>
+</div>
+
+
+
+<div class="row mt-5 mb-10">
+    <div class="col-5">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Ingrese sus datos</h5>
+                <form method="post">
+                    <div class="form-group">
+                        {% csrf_token %}
+                        <label for="funcion">Función</label>
+                        <input type="text" 
+                                class="form-control" 
+                                name="funcion" 
+                                placeholder="Example input">
+
+                                
+                                <label for="funcion">Valor de intervalo (a)</label>
+                                <input type="text" 
+                                class="form-control" 
+                                name="xs" 
+                                placeholder="Example input">
+                                
+                                <label for="funcion">Valor de intervalo (b)</label>
+                                <input type="text" 
+                                class="form-control" 
+                                name="xi" 
+                                placeholder="Example input">
+                                
+                                <label for="funcion">Tolerancia</label>
+                                <input type="text" 
+                                        class="form-control" 
+                                        name="tolerancia"  
+                                        placeholder="Example input">
+            
+                                <label for="funcion">Iteraciones</label>
+                                <input type="text" 
+                                        class="form-control" 
+                                        name="iteraciones" 
+                                        placeholder="Example input">
+                                
+                                <button type="submit" class="btn btn-outline-secondary" >Evaluar</button>
+                            </div>
+                        </form>
+                    </div>
+        </div>
+    </div>
+
+<!-- TODO: CUADRAR LA TABLA -->
+    <div class="col-5">
+        <h2>Solucion</h2>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    {%for i in data.columns %}
+                    <th scope="col">
+                        <h3>{{i}}</h3>
+                    </th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {%for dato in data.results %}
+                <tr>
+                    {%for valores in dato %}
+                    <td>{{valores}}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h4>{{data.root}} es una aproximacion de un raiz de f(x) con una tolerancia</h4>
+    </div>
+</div>
+
+{% endblock %}
