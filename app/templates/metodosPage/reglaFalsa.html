@@ -1,17 +1,12 @@
 {% extends 'layout.html' %}
 
-
-
 {% block content %}
-
 
 <div class="info">
     <br>
     <br>
-    <h1>Metodo Regla False</h1>
+    <h1>Método Regla Falsa</h1>
 </div>
-
-
 
 <div class="row mt-5 mb-10">
     <div class="col-5">
@@ -22,70 +17,76 @@
                     <div class="form-group">
                         {% csrf_token %}
                         <label for="funcion">Función</label>
-                        <input type="text" 
-                                class="form-control" 
-                                name="funcion" 
-                                placeholder="Example input">
+                        <input type="text"
+                                class="form-control"
+                                name="funcion"
+                                placeholder="Ingrese función">
 
-                        <label for="funcion">Valor de intervalo (a)</label>
-                        <input type="text" 
-                                class="form-control" 
-                                name="lowerinterval"  
-                                placeholder="Example input">
+                        <label for="lowerinterval">Valor de intervalo (a)</label>
+                        <input type="text"
+                                class="form-control"
+                                name="lowerinterval"
+                                placeholder="Ingrese valor de a">
 
-                        <label for="funcion">Valor de intervalo (b)</label>
-                        <input type="text" 
-                                class="form-control" 
-                                name="higherinterval" 
-                                placeholder="Example input">
+                        <label for="higherinterval">Valor de intervalo (b)</label>
+                        <input type="text"
+                                class="form-control"
+                                name="higherinterval"
+                                placeholder="Ingrese valor de b">
 
-                        <label for="funcion">Tolerancia</label>
-                        <input type="text" 
-                                class="form-control" 
-                                name="tolerancia" 
-                                placeholder="Example input">
+                        <label for="tolerancia">Tolerancia</label>
+                        <input type="text"
+                                class="form-control"
+                                name="tolerancia"
+                                placeholder="Ingrese tolerancia">
 
-                        <label for="funcion">Iteraciones</label>
-                        <input type="text" 
-                                class="form-control" 
-                                name="iteraciones" 
-                                placeholder="Example input">
-                        
-                        
-                        <button type="submit" class="btn btn-outline-secondary" >Evaluar</button>
+                        <label for="iteraciones">Iteraciones</label>
+                        <input type="text"
+                                class="form-control"
+                                name="iteraciones"
+                                placeholder="Ingrese número de iteraciones">
+
+                        <button type="submit" class="btn btn-outline-secondary">Evaluar</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-<!-- TODO: CUADRAR LA TABLA -->
-
     <div class="col-5">
-        <h2>Solucion</h2>
-        <table class="table">
-            <thead class="thead-dark">
-                <tr>
-                    {%for i in data.columns %}
-                    <th scope="col">
-                        <h3>{{i}}</h3>
-                    </th>
+        {% if error_message %}
+            <div class="alert alert-danger" role="alert">
+                {{ error_message }}
+            </div>
+        {% endif %}
+        {% if data %}
+            <h2>Solución</h2>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        {% for i in data.columns %}
+                        <th scope="col">
+                            <h3>{{ i }}</h3>
+                        </th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for dato in data.results %}
+                    <tr>
+                        {% for valores in dato %}
+                        <td>{{ valores }}</td>
+                        {% endfor %}
+                    </tr>
                     {% endfor %}
-                </tr>
-            </thead>
-            <tbody>
-                {%for dato in data.results %}
-                <tr>
-                    {%for valores in dato %}
-                    <td>{{valores}}</td>
-                    {% endfor %}
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <h4>La aproximacion de la raiz encontrada es: {{data.root}}</h4>
+                </tbody>
+            </table>
+            <h4>La aproximación de la raíz encontrada es: {{ data.root }}</h4>
+            {% if plot_url %}
+                <img src="data:image/png;base64,{{ plot_url }}" alt="Gráfico Regla Falsa">
+            {% endif %}
+        {% endif %}
     </div>
 </div>
-
 
 {% endblock %}

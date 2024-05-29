@@ -2,12 +2,12 @@
 
 {% block content %}
 
-
 <div class="info">
     <br>
     <br>
-    <h1>VanderMonde</h1>
+    <h1>Método de Vandermonde</h1>
 </div>
+
 <div class="row mt-5 mb-10">
     <div class="col-5">
         <div class="card">
@@ -16,18 +16,17 @@
                 <form method="post">
                     <div class="form-group">
                         {% csrf_token %}
+                        <label for="vectorX">X</label>
+                        <input type="text"
+                                class="form-control"
+                                name="vectorX"
+                                placeholder="Ingrese el vector X">
 
-                        <label for="funcion">X</label>
-                        <input type="text" 
-                                class="form-control" 
-                                name="vectorX" 
-                                placeholder="Example input">
-
-                        <label for="funcion">Y</label>
-                        <input type="text" 
-                                class="form-control" 
-                                name="vectorY"  
-                                placeholder="Example input">
+                        <label for="vectorY">Y</label>
+                        <input type="text"
+                                class="form-control"
+                                name="vectorY"
+                                placeholder="Ingrese el vector Y">
 
                         <button type="submit" class="btn btn-outline-secondary">Evaluar</button>
                     </div>
@@ -36,56 +35,62 @@
         </div>
     </div>
 
-
     <div class="col-5">
-
+        {% if error_message %}
+            <div class="alert alert-danger" role="alert">
+                {{ error_message }}
+            </div>
+        {% endif %}
         {% if data %}
-        <table class="table">
-            <thead class="thead-dark">
-                <h3>Matriz</h3>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <h4>{{data.matriz}}</h4>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+            <h2>Matriz de Vandermonde</h2>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Matriz</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ data.matriz }}</td>
+                    </tr>
+                </tbody>
+            </table>
 
-        <table class="table">
-            <thead>
-                <h3>Coeficientes</h3>
-            </thead>
-            <tbody>
-                {%for i in data.coeficientes %}
-                <tr>
-                    <td>
-                        <h4>{{i}}</h4>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+            <h2>Coeficientes</h2>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Coeficientes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for coef in data.coeficientes %}
+                    <tr>
+                        <td>{{ coef }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
 
-        <table class="table">
-            <thead>
-                <h3>Polinomio</h3>
-            </thead>
-            <tbody>
-               
-                <tr>
-                    <td>
-                        <h4>{{data.polinomio}}</h4>
-                    </td>
-                </tr>
-              
-            </tbody>
-        </table>
-    </div>
+            <h2>Polinomio Interpolante</h2>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Polinomio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ data.polinomio }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            {% if plot_url %}
+                <img src="data:image/png;base64,{{ plot_url }}" alt="Gráfico Polinomio Interpolante">
+            {% endif %}
         {% endif %}
     </div>
-
-    
+</div>
 
 {% endblock %}

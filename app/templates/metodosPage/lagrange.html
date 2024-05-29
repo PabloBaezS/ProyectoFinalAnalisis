@@ -1,35 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Interpolación de Lagrange</title>
-</head>
-<body>
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="info">
+    <br>
+    <br>
     <h1>Interpolación de Lagrange</h1>
-    <form method="post" id="lagrangeForm">
-        {% csrf_token %}
-        <label for="x">Valores de X:</label>
-        <input type="text" name="x[]" required><br>
-        <label for="y">Valores de Y:</label>
-        <input type="text" name="y[]" required><br>
-        <button type="submit">Interpolar</button>
-    </form>
-    <div id="result"></div>
+</div>
 
-    <script>
-        document.getElementById('lagrangeForm').addEventListener('submit', function(event) {
-            event.preventDefault();
+<div class="row mt-5 mb-10">
+    <div class="col-5">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Ingrese sus datos</h5>
+                <form method="post">
+                    <div class="form-group">
+                        {% csrf_token %}
+                        <label for="x">Valores de X</label>
+                        <input type="text" class="form-control" name="x" placeholder="Ingrese el vector X" required>
 
-            const formData = new FormData(this);
-            fetch("{% url 'lagrange' %}", {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('result').innerText = 'Coeficientes: ' + data.coefficients;
-            });
-        });
-    </script>
-</body>
-</html>
+                        <label for="y">Valores de Y</label>
+                        <input type="text" class="form-control" name="y" placeholder="Ingrese el vector Y" required>
+
+                        <button type="submit" class="btn btn-outline-secondary">Interpolar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Resultado -->
+    <div class="col-5">
+        {% if error_message %}
+            <div class="alert alert-danger" role="alert">
+                {{ error_message }}
+            </div>
+        {% endif %}
+            <h2>Coeficientes</h2>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Valores</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for coeff in coefficients %}
+                    <tr>
+                        <td>{{ coeff }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% if plot_url %}
+            <h2>Gráfico de Interpolación de Lagrange</h2>
+            <img src="data:image/png;base64,{{ plot_url }}" alt="Gráfico de Interpolación de Lagrange">
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

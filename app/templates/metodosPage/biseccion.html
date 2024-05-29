@@ -2,60 +2,17 @@
 
 {% block content %}
 
-
-
-<style>
-    .form-control {
-        border: none;
-        background-color: transparent;
-        color: lightgray;
-    }
-
-    .form-control::placeholder {
-        color: lightgray;
-    }
-
-    .form-control:focus {
-        outline: none;
-        box-shadow: none;
-    }
-
-    .info h1 {
-        color: lightgray;
-    }
-
-    .card-title, .table th, .table td, h2, h4 {
-        color: lightgray;
-    }
-
-    .btn-outline-secondary {
-        color: lightgray;
-        border-color: lightgray;
-    }
-
-    .btn-outline-secondary:hover {
-        color: white;
-        background-color: lightgray;
-    }
-
-    .thead-dark th {
-        color: white;
-        background-color: darkgray;
-    }
-</style>
 <div class="info">
     <br>
     <br>
     <h1>Método de bisección</h1>
 </div>
 
-
-
 <div class="row mt-5 mb-10">
     <div class="col-5">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title"; style="color: black">Ingrese sus datos</h5>
+                <h5 class="card-title">Ingrese sus datos</h5>
                 <form method="post">
                     <div class="form-group">
                         {% csrf_token %}
@@ -63,65 +20,67 @@
                         <input type="text"
                                 class="form-control"
                                 name="funcion"
-                                placeholder="Ingrese funcion">
-
-
+                                placeholder="Ingrese función">
                         <label for="funcion">Valor de intervalo (a)</label>
                         <input type="text"
                                 class="form-control"
                                 name="xs"
                                 placeholder="Intervalo A">
-
                         <label for="funcion">Valor de intervalo (b)</label>
                         <input type="text"
                                 class="form-control"
                                 name="xi"
                                 placeholder="Intervalo B">
-
                         <label for="funcion">Tolerancia</label>
                         <input type="text"
                                 class="form-control"
                                 name="tolerancia"
                                 placeholder="Tol">
-
                         <label for="funcion">Iteraciones</label>
                         <input type="text"
                                 class="form-control"
                                 name="iteraciones"
                                 placeholder="Numiter">
-
-                                <button type="submit" class="btn btn-outline-secondary" >Evaluar</button>
-                            </div>
-                        </form>
+                        <button type="submit" class="btn btn-outline-secondary" >Evaluar</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 
-<!-- TODO: CUADRAR LA TABLA -->
-
     <div class="col-5">
-        <h2>Solucion</h2>
-        <table class="table">
-            <thead class="thead-dark">
-                <tr>
-                    {%for i in data.columns %}
-                    <th scope="col">
-                        <h3>{{i}}</h3>
-                    </th>
+        {% if error_message %}
+            <div class="alert alert-danger" role="alert">
+                {{ error_message }}
+            </div>
+        {% endif %}
+        {% if data %}
+            <h2>Solución</h2>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        {% for i in data.columns %}
+                        <th scope="col">
+                            <h3>{{ i }}</h3>
+                        </th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for datos in data.results %}
+                    <tr>
+                        {% for valor in datos %}
+                        <td>{{ valor }}</td>
+                        {% endfor %}
+                    </tr>
                     {% endfor %}
-                </tr>
-            </thead>
-            <tbody>
-                {%for datos in data.results %}
-                <tr>
-                    {%for valor in datos %}
-                    <td>{{valor}}</td>
-                    {% endfor %}
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <h4>La aproximacion de la raiz encontrada es: {{data.root}}</h4>
+                </tbody>
+            </table>
+            <h4>La aproximación de la raíz encontrada es: {{ data.root }}</h4>
+            {% if plot_url %}
+                <img src="data:image/png;base64,{{ plot_url }}" alt="Gráfico Bisección">
+            {% endif %}
+        {% endif %}
     </div>
 </div>
 

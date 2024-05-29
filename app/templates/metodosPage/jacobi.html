@@ -2,14 +2,11 @@
 
 {% block content %}
 
-
 <div class="info">
     <br>
     <br>
     <h1>Método de Jacobi</h1>
 </div>
-
-
 
 <div class="row mt-5 mb-10">
     <div class="col-5">
@@ -19,64 +16,70 @@
                 <form method="post">
                     <div class="form-group">
                         {% csrf_token %}
-                        <label for="funcion">Matriz A</label>
-                        <input type="text" 
-                                class="form-control" 
-                                name="matrizA" 
-                                placeholder="Example input">
+                        <label for="matrizA">Matriz A</label>
+                        <input type="text"
+                                class="form-control"
+                                name="matrizA"
+                                placeholder="Ingrese la matriz A ">
 
-                        <label for="funcion">Vector X0</label>
-                        <input type="text" 
-                                class="form-control" 
-                                name="vectorX0"  
-                                placeholder="Example input">
+                        <label for="vectorX0">Vector X0</label>
+                        <input type="text"
+                                class="form-control"
+                                name="vectorX0"
+                                placeholder="Ingrese el vector X0">
 
-                        <label for="funcion">Vector B</label>
-                        <input type="text" 
-                                class="form-control" 
-                                name="vectorB" 
-                                placeholder="Example input">
+                        <label for="vectorB">Vector B</label>
+                        <input type="text"
+                                class="form-control"
+                                name="vectorB"
+                                placeholder="Ingrese el vector B">
 
-                        <label for="funcion">Tolerancia</label>
-                        <input type="text" 
-                                class="form-control" 
-                                name="tolerancia" 
-                                placeholder="Example input">
+                        <label for="tolerancia">Tolerancia</label>
+                        <input type="text"
+                                class="form-control"
+                                name="tolerancia"
+                                placeholder="Ingrese la tolerancia">
 
-<!--                         <label for="funcion">Valor norma</label>
-                        <input type="text" 
-                                class="form-control" 
-                                name="norma" 
-                                placeholder="Example input"> -->
+                        <label for="iteraciones">Iteraciones</label>
+                        <input type="text"
+                                class="form-control"
+                                name="iteraciones"
+                                placeholder="Ingrese el número de iteraciones">
 
-                        <label for="funcion">Iteraciones</label>
-                        <input type="text" 
-                                class="form-control" 
-                                name="iteraciones" 
-                                placeholder="Example input">
-
-                        <button type="submit" class="btn btn-outline-secondary" >Evaluar</button>
+                        <button type="submit" class="btn btn-outline-secondary">Evaluar</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-<!-- TODO: CUADRAR LA TABLA -->
     <div class="col-5">
-        <h2>Solucion</h2>
-        <table class="table">
-            <tr>
-                <th>Matriz T</th>
-                <th>Matriz C</th>
-            </tr>
-
-            <tr>
-                <td>{{data.t}}</td>
-                <td>{{data.c}}</td>
-            </tr>
-        </table>
-        <h4>El radio espectral es: {{data.esp}}</h4>
+        {% if error_message %}
+            <div class="alert alert-danger" role="alert">
+                {{ error_message }}
+            </div>
+        {% endif %}
+        {% if data %}
+            <h2>Solución</h2>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Matriz T</th>
+                        <th>Matriz C</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ data.t }}</td>
+                        <td>{{ data.c }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h4>El radio espectral es: {{ data.spectral_radius }}</h4>
+            {% if plot_url %}
+                <img src="data:image/png;base64,{{ plot_url }}" alt="Gráfico Jacobi">
+            {% endif %}
+        {% endif %}
     </div>
 </div>
 

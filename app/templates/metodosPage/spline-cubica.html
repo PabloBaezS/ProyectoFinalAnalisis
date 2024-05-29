@@ -2,14 +2,11 @@
 
 {% block content %}
 
-
 <div class="info">
     <br>
     <br>
-    <h1>Método Cubico</h1>
+    <h1>Método Spline Cúbica</h1>
 </div>
-
-
 
 <div class="row mt-5 mb-10">
     <div class="col-5">
@@ -19,17 +16,12 @@
                 <form method="post">
                     <div class="form-group">
                         {% csrf_token %}
-                        <label for="funcion">X</label>
-                        <input type="text" 
-                                class="form-control" 
-                                name="x" 
-                                placeholder="Example input">
+                        <label for="x">X</label>
+                        <input type="text" class="form-control" name="x" placeholder="Ingrese el vector X">
 
-                        <label for="funcion">Y</label>
-                        <input type="text" 
-                                class="form-control" 
-                                name="y"  
-                                placeholder="Example input">
+                        <label for="y">Y</label>
+                        <input type="text" class="form-control" name="y" placeholder="Ingrese el vector Y">
+
                         <button type="submit" class="btn btn-outline-secondary">Evaluar</button>
                     </div>
                 </form>
@@ -38,46 +30,47 @@
     </div>
 
     <!-- Resultado -->
-
     <div class="col-5">
-
-        {% if coef %}
-        <table class="table">
-            <thead class="thead-dark">
-                <h3>Coefficients</h3>
-                <tr>
-                    <th scope="col">VALUES </th>
-                </tr>
-            </thead>
-            <tbody>
-                {%for i in coef %}
-                <tr>
-                    <td>
-                        <h4>{{i}}</h4>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-
-        <table class="table">
-            <thead>
-                <h3>Polynomial</h3>
-                <tr>
-                    <th scope="col">VALUES</th>
-                </tr>
-            </thead>
-            <tbody>
-                {%for i in tracers %}
-                <tr>
-                    <td>
-                        <h4>{{i}}</h4>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        {% if error_message %}
+            <div class="alert alert-danger" role="alert">
+                {{ error_message }}
+            </div>
+        {% endif %}
+            <h2>Coeficientes</h2>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Valores</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for poly in coef %}
+                    <tr>
+                        <td>{{ poly }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <h2>Polinomios</h2>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Valores</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tracer in tracers %}
+                    <tr>
+                        <td>{{ tracer }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% if plot_url %}
+            <h2>Gráfico de Interpolación Cúbica</h2>
+            <img src="data:image/png;base64,{{ plot_url }}" alt="Gráfico Spline Cúbica">
         {% endif %}
     </div>
+</div>
 
-    {% endblock %}
+{% endblock %}

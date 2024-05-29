@@ -2,14 +2,11 @@
 
 {% block content %}
 
-
 <div class="info">
     <br>
     <br>
-    <h1>Método de Newton(Divided difference method)</h1>
+    <h1>Método de Newton (Divided Difference Method)</h1>
 </div>
-
-
 
 <div class="row mt-5 mb-10">
     <div class="col-5">
@@ -19,18 +16,11 @@
                 <form method="post">
                     <div class="form-group">
                         {% csrf_token %}
+                        <label for="x">X</label>
+                        <input type="text" class="form-control" name="x" placeholder="Ingrese el vector X">
 
-                        <label for="funcion">X</label>
-                        <input type="text" 
-                                class="form-control" 
-                                name="x" 
-                                placeholder="Example input">
-
-                        <label for="funcion">Y</label>
-                        <input type="text" 
-                                class="form-control" 
-                                name="y"  
-                                placeholder="Example input">
+                        <label for="y">Y</label>
+                        <input type="text" class="form-control" name="y" placeholder="Ingrese el vector Y">
 
                         <button type="submit" class="btn btn-outline-secondary">Evaluar</button>
                     </div>
@@ -40,49 +30,47 @@
     </div>
 
     <!-- Resultado -->
-
     <div class="col-5">
-
-        {% if datos %}
-        <table class="table">
-            <thead class="thead-dark">
-                <h3>Matriz</h3>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <h4>{{datos.D}}</h4>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-        <table class="table">
-            <thead>
-                <h3>Coeficientes</h3>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <h4>{{datos.Coef}}</h4>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-<!--         <table class="table">
-            <thead>
-                <h3>Polinomio</h3>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <h4>{{data.polinomio}}</h4>
-                    </td>
-                </tr>
-            </tbody>
-        </table> -->
+        {% if error_message %}
+            <div class="alert alert-danger" role="alert">
+                {{ error_message }}
+            </div>
+        {% endif %}
+            <h2>Coeficientes</h2>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Valores</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for coef in datos.Coef %}
+                    <tr>
+                        <td>{{ coef }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <h2>Matriz de Diferencias Divididas</h2>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Valores</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in datos.D %}
+                    <tr>
+                        <td>{{ row }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% if plot_url %}
+            <h2>Gráfico de Interpolación de Newton</h2>
+            <img src="data:image/png;base64,{{ plot_url }}" alt="Gráfico Spline Cuadrática">
         {% endif %}
     </div>
+</div>
 
-    {% endblock %}
+{% endblock %}
