@@ -1,6 +1,6 @@
 # Análisis Numérico
 
-Este repositorio contiene una implementación de varios métodos de análisis numérico desarrollados en Python y Django. La aplicación permite resolver problemas numéricos mediante diferentes métodos como el método de bisección, entre otros.
+Este repositorio contiene una implementación de varios métodos de análisis numérico desarrollados en Python y Django. La aplicación permite resolver problemas numéricos mediante diferentes métodos como el método de bisección, método de Newton-Raphson, método de la secante, interpolación de Lagrange, entre otros.
 
 ## Desarrolladores
 
@@ -14,11 +14,12 @@ Este repositorio contiene una implementación de varios métodos de análisis nu
 Para ejecutar este proyecto, asegúrate de tener instaladas las siguientes dependencias:
 
 ```plaintext
-Django==3.1.7
+Django==4.1.2
 numpy==1.20.1
 pandas==1.2.3
 matplotlib==3.3.4
 sympy==1.7.1
+scipy==1.6.1
 ```
 
 Puedes instalarlas utilizando el archivo `requirements.txt` incluido en el repositorio. Para ello, ejecuta:
@@ -76,6 +77,16 @@ Este proyecto incluye implementaciones de varios métodos numéricos, tales como
 - Método de bisección
 - Método de Newton-Raphson
 - Método de la secante
+- Método de interpolación de Lagrange
+- Método de spline lineal
+- Método de spline cuadrática
+- Método de spline cúbica
+- Método de diferencias divididas de Newton
+- Método de regla falsa
+- Método de punto fijo
+- Método de Gauss-Seidel
+- Método de Jacobi
+- Método SOR (Successive Over-Relaxation)
 - Entre otros
 
 Cada método incluye una interfaz amigable donde puedes ingresar los parámetros necesarios y obtener los resultados tanto en forma de tabla como de gráficos.
@@ -87,7 +98,7 @@ La estructura del proyecto es la siguiente:
 ```
 Analisis_Numerico/
 ├── manage.py
-├── metodos/
+├── app/
 │   ├── admin.py
 │   ├── apps.py
 │   ├── __init__.py
@@ -95,12 +106,24 @@ Analisis_Numerico/
 │   │   ├── __init__.py
 │   ├── models.py
 │   ├── static/
+│   │   ├── styles/
+│   │       ├── layout.css
 │   ├── templates/
 │   │   ├── layout.html
 │   │   ├── metodosPage/
 │   │       ├── biseccion.html
 │   │       ├── newton.html
 │   │       ├── secante.html
+│   │       ├── lagrange.html
+│   │       ├── spline-lineal.html
+│   │       ├── spline-cuadratica.html
+│   │       ├── spline-cubica.html
+│   │       ├── diferencias-divididas.html
+│   │       ├── regla-falsa.html
+│   │       ├── punto-fijo.html
+│   │       ├── gauss-seidel.html
+│   │       ├── jacobi.html
+│   │       ├── sor.html
 │   ├── tests.py
 │   ├── urls.py
 │   ├── views.py
@@ -112,5 +135,3 @@ Analisis_Numerico/
 │   ├── wsgi.py
 ├── requirements.txt
 ```
-
-Saludos!
