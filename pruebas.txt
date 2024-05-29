@@ -1,0 +1,89 @@
+BISECCION:
+x**2-x-4
+0
+2
+1e-5
+100
+
+PUNTO FIJO:
+X0 = 0.5  # Valor inicial
+Tol = 1e-5  # Tolerancia
+Niter = 100  # Número máximo de iteraciones
+fx = 'x**2 - x - 1'  # Expresión de la función f(x)
+gx = '(x + 1)**0.5'  # Expresión de la función g(x)
+
+NEWTON:
+Función: x**3 - x - 2
+Función F' (Primera derivada): 3*x**2 - 1
+Valor inicial (x0): 1
+Tolerancia: 1e-5
+Iteraciones: 100
+
+REGLA FALSA:
+Función: x**3 - x - 2
+Valor de intervalo (a): 1
+Valor de intervalo (b): 2
+Tolerancia: 1e-5
+Iteraciones: 100
+
+SECANTE:
+Función: x**3 - x - 2
+Valor de intervalo (a): 1
+Valor de intervalo (b): 2
+Tolerancia: 1e-5
+Iteraciones: 100
+
+RAICES MULTIPLES:
+Función: x**3 - x - 2
+X0: 1
+Iteraciones: 100
+Tolerancia: 1e-5
+
+
+------ITERATIVOS:-----
+JACOBI:
+Matriz A: 4, 1; 2, 3
+Vector X0: 0, 0
+Vector B: 1, 2
+Tolerancia: 1e-5
+Iteraciones: 100
+
+GAUSS SEIDEL:
+Matriz A: 4, 1; 2, 3
+Vector X0: 0, 0
+Vector B: 1, 2
+Tolerancia: 1e-5
+Iteraciones: 100
+
+SOR:
+Matriz A: 4, 1; 2, 3
+Vector X0: 0, 0
+Vector B: 1, 2
+Valor - W: 1.25
+Tolerancia: 1e-5
+Iteraciones: 100
+
+-----INTERPOLANTES:-----
+VANDERMONDE:
+Vector X: 1, 2, 3, 4
+Vector Y: 1, 4, 9, 16
+
+SPLINE LINEAL:
+X: -2,-0.5,1,3
+Y: 2.93,1.31,3.92,1.81
+
+SPLINE CUADRATICO:
+X: -2,-0.5,1,3
+Y: 2.93,1.31,3.92,1.81
+
+SPLINE CUBICO:
+X: -2,-1,0,1,2
+Y: -27,-1,0,1,27
+
+NEWTON INTER:
+X: 1,2,3,4
+Y: 1,4,9,16
+
+LAGRANGE:
+Valores de X: 1, 2, 3, 4, 5
+Valores de Y: 2, 3, 5, 7, 11
